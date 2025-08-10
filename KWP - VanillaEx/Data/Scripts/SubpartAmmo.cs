@@ -5,6 +5,7 @@ using Sandbox.Game;
 using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
 using System.Collections.Generic;
+using System.Linq;
 using VRage.Game.Components;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI;
@@ -18,6 +19,8 @@ namespace VanillaEx
         "KJN_KWP_BMB_an_m57A1_250lb_block",
         "KJN_KWP_BMB_an_m64A1_500lb_block",
         "KJN_KWP_BMB_an_m65A1_1000lb_block",
+        "KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_block",
+        "KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_mirrored",
         "KJN_KWP_BMB_an_m66A1_2000lb_block",
         "KJN_KWP_BMB_pc1000_1000kg_block",
         "KJN_KWP_BMB_pc1600_1600kg_block",
@@ -31,7 +34,7 @@ namespace VanillaEx
         IMySmallMissileLauncher launcher;
         IMyMissileGunObject launcherObj; //Required for CanShoot
         List<MyEntitySubpart> subparts = new List<MyEntitySubpart>();
-        bool subpartVis = true; //Optimization
+        Queue<MyEntitySubpart> unfired = new Queue<MyEntitySubpart>();
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -43,7 +46,6 @@ namespace VanillaEx
         {
             if (launcher.CubeGrid.Physics != null)
             {
-                //Get subparts
                 if (launcher.Components.Has<MyHierarchyComponentBase>())
                 {
                     var comp = launcher.Components.Get<MyHierarchyComponentBase>();
@@ -52,13 +54,17 @@ namespace VanillaEx
                     foreach (var child in result)
                     {
                         MyEntitySubpart subpart = child as MyEntitySubpart;
-                        if (subpart != null)
+                        if(subpart != null)
                         {
                             subparts.Add(subpart);
                         }
                     }
+                    // subparts = subparts.OrderBy(sp => sp.DisplayName).ToList();
+                    foreach(var subpart in subparts)
+                    {
+                        unfired.Enqueue(subpart);
+                    }
                 }
-
                 launcherObj = launcher as IMyMissileGunObject;
                 NeedsUpdate |= MyEntityUpdateEnum.EACH_10TH_FRAME;
             }
@@ -71,32 +77,24 @@ namespace VanillaEx
             if (status == MyGunStatusEnum.Reloading
             ||  status == MyGunStatusEnum.OutOfAmmo)
             {
-                if (subpartVis)
+                if(unfired.Count > 0)
                 {
-                    for (int i = (subparts.Count - 1); i >= 0; i--)
-                    {
-                        MyEntitySubpart subpart = subparts[i];
-                        if (subpart != null)
-                        { subpart.Render.Visible = false; }
-                        else
-                        { subparts.Remove(subpart); }
-                    }
-                    subpartVis = false;
+                    var subpart = unfired.Dequeue();
+                    if (subpart != null)
+                    { subpart.Render.Visible = false; }
+                    else
+                    { subparts.Remove(subpart); }
                 }
             }
             else
             {
-                if (!subpartVis)
+                if(unfired.Count == 0)
                 {
-                    for (int i = (subparts.Count - 1); i >= 0; i--)
+                    foreach (var subpart in subparts)
                     {
-                        MyEntitySubpart subpart = subparts[i];
-                        if (subpart != null)
-                        { subpart.Render.Visible = true; }
-                        else
-                        { subparts.Remove(subpart); }
+                        unfired.Enqueue(subpart);
+                        subpart.Render.Visible = true;
                     }
-                    subpartVis = true;
                 }
             }
         }

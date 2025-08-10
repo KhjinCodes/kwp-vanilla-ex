@@ -11,6 +11,7 @@ using VRage.Game.Components;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI;
 using VRage.ObjectBuilders;
+using VRage.Utils;
 using VRageMath;
 
 namespace VanillaEx
@@ -54,6 +55,8 @@ namespace VanillaEx
             Register(KJN_KWP_BMB_an_m64A1_500lb_block);
             Register(KJN_KWP_BMB_an_m65A1_1000lb_block);
             Register(KJN_KWP_BMB_an_m66A1_2000lb_block);
+            Register(KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_block);
+            Register(KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_mirrored);
             // AP Bombs
             Register(KJN_KWP_BMB_pc1000_1000kg_block);
             Register(KJN_KWP_BMB_pc1600_1600kg_block);
@@ -145,8 +148,8 @@ namespace VanillaEx
             SubtypeId = "KJN_KWP_ROC_hvar_ammo",
             Fuse = new FuseDefinition()
             {
-                MinTicksToArm = 5,
-                DetectRange = 0,
+                MinTicksToArm = 30,
+                DetectRange = 1.5f,
             }
         };
         private AmmoDef KJN_KWP_ROC_tinytim_ammo = new AmmoDef()
@@ -200,52 +203,74 @@ namespace VanillaEx
         private WeaponDef KJN_KWP_BMB_an_m30A1_100lb_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_an_m30A1_100lb_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.15),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_BMB_an_m57A1_250lb_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_an_m57A1_250lb_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.25),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_BMB_an_m64A1_500lb_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_an_m64A1_500lb_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.35),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_BMB_an_m65A1_1000lb_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_an_m65A1_1000lb_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.60),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
+        
+        // For custom mirror blocks, they must end with either block or mirrored
+        private WeaponDef KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_block = new WeaponDef()
+        {
+            SubtypeId = "KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_block",
+            AmmoOffsets = new Vector3D(0, 0, -1.25),
+            InitialVelocity = new Vector3D(0, 0, -4),
+        };
+        private WeaponDef KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_mirrored = new WeaponDef()
+        {
+            SubtypeId = "KJN_KWP_BMB_an_m65A1_1000lb_4x_rack_mirrored",
+            AmmoOffsets = new Vector3D(0, 0, -1.25),
+            InitialVelocity = new Vector3D(0, 0, -4),
+        };
+        
         private WeaponDef KJN_KWP_BMB_an_m66A1_2000lb_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_an_m66A1_2000lb_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.1),
+            AmmoOffsets = new Vector3D(0, 0, -0.75),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_BMB_pc1000_1000kg_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_pc1000_1000kg_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.6),
+            AmmoOffsets = new Vector3D(0, 0, -0.60),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_BMB_pc1600_1600kg_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_BMB_pc1600_1600kg_block",
-            AmmoOffsets = new Vector3D(0, 0, -0.7),
+            AmmoOffsets = new Vector3D(0, 0, -0.75),
+            InitialVelocity = new Vector3D(0, 0, -2),
         };
         private WeaponDef KJN_KWP_ROC_m8_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_ROC_m8_block",
-            AmmoOffsets = new Vector3D(0, 1, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.25),
         };
         private WeaponDef KJN_KWP_ROC_hvar_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_ROC_hvar_block",
-            AmmoOffsets = new Vector3D(0, 0.5, -0.5),
+            AmmoOffsets = new Vector3D(0, -5, -0.15),
         };
         private WeaponDef KJN_KWP_ROC_tinytim_block = new WeaponDef()
         {
             SubtypeId = "KJN_KWP_ROC_tinytim_block",
-            AmmoOffsets = new Vector3D(0, 0.5, -0.5),
+            AmmoOffsets = new Vector3D(0, 0, -0.25),
         };
         private WeaponDef KJN_KWP_GUN_flak36_block = new WeaponDef()
         {
@@ -269,7 +294,7 @@ namespace VanillaEx
         private Dictionary<string, WeaponDef> weaponDefs = new Dictionary<string, WeaponDef>();
         private Dictionary<string, MyWeaponDefinition> sbcWeaponDefs = new Dictionary<string, MyWeaponDefinition>();
         private Dictionary<string, MyAmmoDefinition> sbcAmmoDefs = new Dictionary<string, MyAmmoDefinition>();
-        private Dictionary<IMyMissile, MissileEntity> missiles = new Dictionary<IMyMissile, MissileEntity>();
+        private Dictionary<long, MissileEntity> missiles = new Dictionary<long, MissileEntity>();
         private Queue<MissileEntity> explosionQueue = new Queue<MissileEntity>();
 
         #region Base Functions
@@ -286,23 +311,30 @@ namespace VanillaEx
             {
                 if (!sbcWeaponDefs.ContainsKey(weaponSubtypeId))
                 {
-                    MyWeaponDefinition sbcWeapon = null;
+                    MyWeaponDefinition sbcWeapon;
                     var id = MyDefinitionId.Parse($"MyObjectBuilder_WeaponDefinition/{weaponSubtypeId}");
-                    MyDefinitionManager.Static.TryGetWeaponDefinition(id, out sbcWeapon);
-                    if (sbcWeapon != null)
+                    if (MyDefinitionManager.Static.TryGetWeaponDefinition(id, out sbcWeapon))
                     { sbcWeaponDefs.Add(weaponSubtypeId, sbcWeapon); }
+                    else
+                    {
+                        id = MyDefinitionId.Parse($"MyObjectBuilder_WeaponDefinition/{weaponSubtypeId.Replace("mirrored", "block")}");
+                        if (MyDefinitionManager.Static.TryGetWeaponDefinition(id, out sbcWeapon))
+                        { sbcWeaponDefs.Add(weaponSubtypeId, sbcWeapon); }
+                    }
                 }
             }
 
-            // Ammos
             foreach (var weapon in sbcWeaponDefs.Values)
             {
                 foreach (var magazine in weapon.AmmoMagazinesId)
                 {
+                    var id = MyDefinitionId.Parse($"MyObjectBuilder_MissileAmmoDefinition/{KJN_KWP_BMB_an_m30A1_100lb_ammo}");
+
                     MyAmmoMagazineDefinition mag = MyDefinitionManager.Static.GetAmmoMagazineDefinition(magazine);
                     MyAmmoDefinition sbcAmmo = MyDefinitionManager.Static.GetAmmoDefinition(mag.AmmoDefinitionId);
-                    if (sbcAmmo != null && ammoDefs.ContainsKey(mag.AmmoDefinitionId.SubtypeName))
-                    { sbcAmmoDefs.Add(mag.AmmoDefinitionId.SubtypeName, sbcAmmo); }
+                    string magId = mag.AmmoDefinitionId.SubtypeName;
+                    if (sbcAmmo != null && !sbcAmmoDefs.ContainsKey(magId))
+                    { sbcAmmoDefs.Add(magId, sbcAmmo); }
                 }
             }
         }
@@ -315,6 +347,7 @@ namespace VanillaEx
                 MyAPIGateway.Missiles.OnMissileMoved += MissileMoved;
                 MyAPIGateway.Missiles.OnMissileCollided += MissileCollided;
                 MyAPIGateway.Missiles.OnMissileRemoved += MissileRemoved;
+                InitDefinitionsSBC();
             }
         }
 
@@ -334,56 +367,69 @@ namespace VanillaEx
             string missileId = obj.AmmoDefinition.Id.SubtypeName;
             try
             {
-                if (IsSupportedMissile(missileId)
-                && !missiles.ContainsKey(obj))
+                if (IsSupportedMissile(missileId))
                 {
-                    // Get the reference to the launcher
-                    MyEntity entity = MyEntities.GetEntityById(obj.LauncherId);
-                    IMySmallMissileLauncher launcher = entity as IMySmallMissileLauncher;
+                    if (!missiles.ContainsKey(obj.EntityId))
+                    {
+                        // Get the reference to the launcher
+                        MyEntity entity = MyEntities.GetEntityById(obj.LauncherId);
+                        IMySmallMissileLauncher launcher = entity as IMySmallMissileLauncher;
 
-                    // Create and register missile
-                    MissileEntity missileEntity = new MissileEntity();
-                    missileEntity.Me = obj;
-                    missileEntity.SubtypeId = missileId;
-                    missileEntity.Launcher = launcher;
-                    missileEntity.OwnerId = launcher.OwnerId;
-                    missileEntity.LauncherSubtypeId = launcher.BlockDefinition.SubtypeId;
-                    missileEntity.Faction = TryGetBlockFaction(launcher);
-                    missileEntity.AmmoDef = ammoDefs[missileId];
-                    missileEntity.CurrArmingTicks = missileEntity.AmmoDef.Fuse.MinTicksToArm;
-                    missileEntity.AmmoDefSBC = sbcAmmoDefs[missileEntity.SubtypeId];
-                    missileEntity.WeaponDefSBC = sbcWeaponDefs[missileEntity.LauncherSubtypeId];
-                    missileEntity.OwningEntity = MyEntities.GetEntityById(launcher.EntityId);   // Rifle or block
-                    missileEntity.OwningEntityAbsolute = GetPlayerEntity(launcher.OwnerId);     // Character
-                    missileEntity.Weapon = missileEntity.OwningEntity;                          // Shooter entity (rifle, block)
-                    missiles.Add(obj, missileEntity);
-                    RepositionAmmo(missileEntity);
+                        // Create and register missile
+                        MissileEntity missileEntity = new MissileEntity();
+                        missileEntity.Me = obj;
+                        missileEntity.SubtypeId = missileId;
+                        missileEntity.Launcher = launcher;
+                        missileEntity.OwnerId = launcher.OwnerId;
+                        missileEntity.LauncherSubtypeId = launcher.BlockDefinition.SubtypeId;
+                        missileEntity.Faction = TryGetBlockFaction(launcher);
+                        missileEntity.AmmoDef = ammoDefs[missileId];
+                        missileEntity.CurrArmingTicks = missileEntity.AmmoDef.Fuse.MinTicksToArm;
+                        missileEntity.AmmoDefSBC = sbcAmmoDefs[missileEntity.SubtypeId];
+                        missileEntity.WeaponDefSBC = sbcWeaponDefs[missileEntity.LauncherSubtypeId];
+                        missileEntity.OwningEntity = MyEntities.GetEntityById(launcher.EntityId);   // Rifle or block
+                        missileEntity.OwningEntityAbsolute = GetPlayerEntity(launcher.OwnerId);     // Character
+                        missileEntity.Weapon = missileEntity.OwningEntity;                          // Shooter entity (rifle, block)
+                        missiles.Add(obj.EntityId, missileEntity);
+                        RepositionAmmo(missileEntity);
+                    }
+                    else
+                    {
+                        ChatMessage($"Existing missile: {obj.EntityId}");
+                    }
+                }
+                else
+                {
+                    ChatMessage($"Unsupported Missile: {missileId}");
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) 
+            {
+                ChatMessage($"Error: {ex.Message}");
+            }
         }
 
         private void MissileRemoved(IMyMissile obj)
         {
-            if (missiles.ContainsKey(obj))
+            if (missiles.ContainsKey(obj.EntityId))
             {
-                missiles.Remove(obj);
+                missiles.Remove(obj.EntityId);
             }
         }
 
         private void MissileMoved(IMyMissile obj, ref Vector3 Velocity)
         {
-            if (missiles.ContainsKey(obj))
+            if (missiles.ContainsKey(obj.EntityId))
             {
-                CheckProximityFuse(obj);
+                CheckProximityFuse(obj.EntityId);
             }
         }
 
         private void MissileCollided(IMyMissile obj)
         {
-            if (missiles.ContainsKey(obj))
+            if (missiles.ContainsKey(obj.EntityId))
             {
-                explosionQueue.Enqueue(missiles[obj]);
+                explosionQueue.Enqueue(missiles[obj.EntityId]);
             }
         }
 
@@ -452,24 +498,30 @@ namespace VanillaEx
                 // Reset to position of launcher
                 WeaponDef weaponDef = weaponDefs[missile.LauncherSubtypeId];
                 Vector3D origVel = missile.Me.LinearVelocity;
-                Vector3D launcherPos = missile.Me.GetPosition();
-                Vector3D launcherFWD = Vector3D.Normalize(missile.Launcher.WorldMatrix.Forward);
-                Vector3D launcherUP = Vector3D.Normalize(missile.Launcher.WorldMatrix.Up);
-                Vector3D launcherLEF = Vector3D.Normalize(missile.Launcher.WorldMatrix.Left);
-                // Calculate new position
-                Vector3D newPos = launcherPos + (launcherFWD * weaponDef.AmmoOffsets.Y);
-                newPos = newPos + (launcherUP * weaponDef.AmmoOffsets.Z);
-                newPos = newPos + (launcherLEF * weaponDef.AmmoOffsets.X);
-                // Set to new position
+
+                // Launcher position and axes (already normalized)
+                MatrixD wm = missile.Launcher.WorldMatrix;
+
+                // Calculate new position in one step
+                Vector3D newPos = missile.Launcher.GetPosition()
+                       + wm.Forward * weaponDef.AmmoOffsets.Y
+                       + wm.Up * weaponDef.AmmoOffsets.Z
+                       + wm.Left * weaponDef.AmmoOffsets.X;
+
+                Vector3D launchBoost =
+                       wm.Forward * weaponDef.InitialVelocity.Y   // forward speed
+                       + wm.Up * weaponDef.InitialVelocity.Z      // upward speed
+                       + wm.Left * weaponDef.InitialVelocity.X;   // sideways speed
+
+                // Apply new position and restore velocity
                 missile.Me.SetPosition(newPos);
-                // Follow original linear velocity
-                missile.Me.LinearVelocity = origVel;
+                missile.Me.LinearVelocity = origVel + launchBoost;
             }
         }
 
-        public void CheckProximityFuse(IMyMissile missile)
+        public void CheckProximityFuse(long entityId)
         {
-            MissileEntity missileEntity = missiles[missile];
+            MissileEntity missileEntity = missiles[entityId];
             if (missileEntity.AmmoDef.Fuse.MinTicksToArm > 0
             && missileEntity.CurrArmingTicks > 0)
             { return; }
@@ -598,6 +650,7 @@ namespace VanillaEx
         public class WeaponDef : BaseDef
         {
             public Vector3D AmmoOffsets = Vector3D.Zero;
+            public Vector3D InitialVelocity = Vector3D.Zero;
         }
 
         public struct FuseDefinition
